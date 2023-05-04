@@ -28,7 +28,7 @@ fl_votes %>%
 
 ```{r add-winner}
 fl_votes <- fl_votes %>% 
-  mutate(winner20 = if_else(rep20 > dem20, TRUE, FALSE))
+  mutate(winner20 = if_else(rep20 > dem20, "Donald Trump", "Joe Biden"))
 ```
 
 
@@ -37,8 +37,8 @@ fl_votes <- fl_votes %>%
 ```{r fl-plot-1}
 ggplot(fl_votes) +
   geom_sf(aes(fill = winner20)) +
-  scale_fill_manual(values = c("#0015BC", "#DE0100" )) +
-  labs(title = "Florida’s 2020 U.S. Presidential election results",
+  scale_fill_manual(values = c("#DE0100", "#0015BC")) +
+  labs(title = "Election winner 2020",
        fill = "winner") + 
   theme_bw() 
 
@@ -58,9 +58,9 @@ fl_votes <- fl_votes %>%
 ```{r fl-plot-2}
 ggplot(fl_votes) +
   geom_sf(aes(fill = prop_rep20),) +
-  scale_fill_gradient(low = "#DE0100", high = "#0015BC") +
-  labs(title = "Florida’s 2020 U.S. Presidential election results",
-       fill = "Republican Vote Share") + 
+  scale_fill_gradient(low = "#0015BC", high = "#DE0100") +
+  labs(title = "Election 2020 Results",
+       fill = "Republican shaer of votes") + 
   theme_bw() 
 
 ```
@@ -77,12 +77,10 @@ fl_votes <- fl_votes %>%
 ```{r fl-plot-3}
 ggplot(fl_votes) +
   geom_sf(aes(fill = diff_rep)) +
-  scale_fill_gradient2(low = "#DE0100", 
-                       mid = "white", 
-                       high = "#0015BC", 
-                       midpoint = 0) +
-  labs(title = "Change in Republican Vote Share (2016-2020)",
-       fill = "Vote Share Difference") + 
+  scale_fill_gradient2(low = "#0015BC",
+                       high = "#DE0100") +
+  labs(title = "Election 2016 and 2020 results",
+       fill = "Change in Republican share of vote") + 
   theme_bw() 
 ```
 
@@ -90,5 +88,5 @@ ggplot(fl_votes) +
 
 7.	What do the visualizations you developed tell you about the 2016 and 2020 Presidential election in Florida? What are limitations of these visualizations?
 
-The northern country of florida have a higher number of republicans, as per the second map. The central counties votes were very close to each other the republican share was close to 50%. Nonetheless, these county still had their vote shores decrease from 2016 to 2020 based on the third map. Some counties of the south had a significant increase of their vote shares of republican. The first visualisation wasn't representative beacuse it only stated who one in each county without presenting the proportion of the win.  
+The northern country of Florida have a higher number of republicans, as per the second map. The central counties votes were very close to each other the republican share was close to 50%. The northern counties vote share decreased from 2016 to 2020 based on the third map. Some counties of the south had a significant increase of their vote shares of republican. The first visualization wasn't representative because it only stated who won in each county without presenting the proportion of the win.  
 
