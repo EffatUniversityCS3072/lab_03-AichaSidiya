@@ -1,0 +1,94 @@
+---
+title: "Lab 03"
+author: "Aicha Sidiya"
+date: "9 May 2023"
+editor_options: 
+  chunk_output_type: console
+output:
+  pdf_document: default
+---
+
+# Packages
+
+```{r load-packages, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(sf)
+``` 
+
+# Data
+
+```{r load-data, message = FALSE}
+fl_votes <- st_read("data/fl_votes.shp", quiet = TRUE)
+fl_votes %>%
+  slice(1:6)
+```
+
+
+# Exercise 1
+
+```{r add-winner}
+fl_votes <- fl_votes %>% 
+  mutate(winner20 = if_else(rep20 > dem20, TRUE, FALSE))
+```
+
+
+# Exercise 2
+
+```{r fl-plot-1}
+ggplot(fl_votes) +
+  geom_sf(aes(fill = winner20)) +
+  scale_fill_manual(values = c("#0015BC", "#DE0100" )) +
+  labs(title = "Florida’s 2020 U.S. Presidential election results",
+       fill = "winner") + 
+  theme_bw() 
+
+
+```
+
+# Exercise #3
+
+```{r fl-props}
+fl_votes <- fl_votes %>% 
+  mutate(prop_rep16 = rep16/(rep16 + dem16),
+         prop_rep20 = rep20/(rep20 + dem20))
+```
+
+# Exercise 4
+
+```{r fl-plot-2}
+ggplot(fl_votes) +
+  geom_sf(aes(fill = prop_rep20),) +
+  scale_fill_gradient(low = "#DE0100", high = "#0015BC") +
+  labs(title = "Florida’s 2020 U.S. Presidential election results",
+       fill = "Republican Vote Share") + 
+  theme_bw() 
+
+```
+
+# Exercise 5
+
+```{r fl-change}
+fl_votes <- fl_votes %>% 
+  mutate(diff_rep = prop_rep20 - prop_rep16)
+```
+
+# Exercise 6
+
+```{r fl-plot-3}
+ggplot(fl_votes) +
+  geom_sf(aes(fill = diff_rep)) +
+  scale_fill_gradient2(low = "#DE0100", 
+                       mid = "white", 
+                       high = "#0015BC", 
+                       midpoint = 0) +
+  labs(title = "Change in Republican Vote Share (2016-2020)",
+       fill = "Vote Share Difference") + 
+  theme_bw() 
+```
+
+# Exercise 7
+
+7.	What do the visualizations you developed tell you about the 2016 and 2020 Presidential election in Florida? What are limitations of these visualizations?
+
+The northern country of florida have a higher number of republicans, as per the second map. The central counties votes were very close to each other the republican share was close to 50%. Nonetheless, these county still had their vote shores decrease from 2016 to 2020 based on the third map. Some counties of the south had a significant increase of their vote shares of republican. The first visualisation wasn't representative beacuse it only stated who one in each county without presenting the proportion of the win.  
+
